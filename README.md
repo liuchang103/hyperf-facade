@@ -54,6 +54,29 @@ $container = Redis::container();
 $container = \Hyperf\Utils\ApplicationContext::getContainer();
 ```
 
+#### 门面别名
+当 Facade 需要起别名时，可用注解方式
+```
+use HyperfFacade\Annotation\Alias;
+
+/**
+ * @Alias("Redis")
+ */
+class Redis extends \HyperfFacade\Facade
+{
+    protected static function getFacadeAccessor()
+    {
+        return \Hyperf\Redis\Redis::class;
+    }
+}
+```
+使用别名
+```
+\Redis::set('key', 'value');
+```
+注：Alias 注解可作用其它类
+
+
 #### 短生命周期
 以上门面代理的都会是长生命周期对象，如果想用门面使用短生命周期并且可自夸依赖注入，请看示例
 ```
@@ -123,7 +146,7 @@ $test->foo();
 ## 长短生命周期测试
 更好的区分应该在何时用单例模式
 
-服务类
+#### 服务类
 ```
 class Test
 {
@@ -138,7 +161,8 @@ class Test
 }
 
 ```
-单例测试
+#### 长生命周期
+单例模式
 ```
 // 门面
 class Test extends \HyperfFacade\Facade
@@ -156,7 +180,8 @@ Test::foo(1);  // 2
 Test::foo(1);  // 3 
 Test::foo(1);  // 4 
 ```
-短生命周期，使用门面时，同等 new 了一次
+#### 短生命周期
+使用门面时，同等 new 了一次
 ```
 // 门面
 class Test extends \HyperfFacade\Facade
