@@ -78,7 +78,7 @@ class Redis extends \HyperfFacade\Facade
 
 
 #### 短生命周期
-以上门面代理的都会是长生命周期对象，如果想用门面使用短生命周期并且可自夸依赖注入，请看示例
+以上门面代理的都会是长生命周期对象，如果想用门面使用短生命周期并且自动依赖注入，请看示例
 ```
 class Test extends \HyperfFacade\Facade
 {
